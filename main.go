@@ -7,6 +7,8 @@ import (
 
 //writes some log messages in your terminal window
 
+//Start off by
+
 //Uses the same pattern for constructing a handler
 func middlewareOne(next http.Handler) http.Handler {
 
@@ -15,8 +17,9 @@ func middlewareOne(next http.Handler) http.Handler {
 	//1. it returns a handler we can register the middleware function directly with the standard http.ServeMux router in Go's net/http package.
 	//2. We can create an arbitrarily long handler chain by nesting middleware functions inside each other.
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		//w.Write([]byte(message) an anonymous function which closes-over the message variable to form a closure.
-		//We will use the same patter for the one above, Instead of passing a string into the closure, we could pass the next handler
+		//an anonymous function which closes-over the message variable to form a closure.
+		//w.Write([]byte(message)
+		//We will use the same patter for the one above, Instead of passing a string into the closure, we would pass the next handler
 		// in the chain as a variable, and then transfer control to this next handler by calling it's ServeHTTP() method.
 		log.Print("Executing middlewareOne")
 		next.ServeHTTP(w, r) // pass the next handler in the chain as a variable. The ServeHTTP method writes out the HTTP response
@@ -35,6 +38,15 @@ func middlewareTwo(next http.Handler) http.Handler {
 
 			return
 		}
+
+		/*
+			 checks if the requested URL path is equal to "/foo". If the condition is true, the function immediately returns and exits
+			the middlewareTwo function, without calling the next handler in the chain of middleware. This means that the subsequent middleware
+			and the final handler will not be executed.
+			However, if the URL path is not equal to "/foo", the middlewareTwo function calls the next handler in the chain of middleware,
+			which in turn executes the final handler. The final handler simply writes a "OK" response to the client.
+
+		*/
 
 		next.ServeHTTP(w, r) // pass the next handler in the chain as a variable. The ServeHTTP method writes out the HTTP response
 		log.Print("Executing middlewareTwo again")
