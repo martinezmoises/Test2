@@ -7,7 +7,11 @@ import (
 
 //writes some log messages in your terminal window
 
-//Start off by
+// Illustrating the Flow of Control
+
+//In web application development there is a lot shared functionality that you want to run
+//Setting up this shared functionality as middleware—self-contained code that operates on a request independently before or after your standard
+//application handlers—is one method to organize it.
 
 //Uses the same pattern for constructing a handler
 func middlewareOne(next http.Handler) http.Handler {
